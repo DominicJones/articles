@@ -1,0 +1,81 @@
+\documentclass[10pt,english]{article}
+\usepackage{array, xcolor, bibentry}
+\usepackage[a4paper,bindingoffset=0.0in,%
+            left=1in,right=1in,top=1in,bottom=1in,%
+            footskip=0.0in]{geometry}
+
+\title{\bfseries\Huge Dominic Jones}
+\author{{Netherhall House, Nutley Terrace, London NW3 5SA}\\ {+44 (0)787 524 2761} $|$ \texttt{dominic.jones@gmx.co.uk}\\ \texttt{github.com/DominicJones}}
+\date{}
+
+\definecolor{lightgray}{gray}{0.8}
+\newcolumntype{L}{>{\raggedleft}p{0.21\textwidth}}
+%\newcolumntype{L}{>{\raggedleft}p{0.22\textwidth}}
+\newcolumntype{R}{p{0.74\textwidth}}
+\newcommand\VRule{\color{lightgray}\vrule width 0.5pt}
+
+\newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny\bf +}}
+
+\begin{document}
+\maketitle
+
+
+
+\section*{Professional work}
+\begin{tabular}{L!{\VRule}R}
+{Sep 2016 -- Present}&{\bf Director, Netherhall House, London}\\
+&{Jointly responsible for the academic, cultural and formational activities of the hall of residence for university students.}\\[5pt]
+%
+{Jul 2016 -- Sep 2017}&{\bf Consultant, CD-adapco / Siemens PLM, London}\\
+&{Designed a compile-time methodology for generating the adjoint derivative of a function. This research work is a proposed tool to complement the existing abstractions for implementing the adjoint of the Navier-Stokes equations in Star-CCM+, an engineering software simulation package from CD-adapco.}\\[5pt]
+%
+{Jan 2012 -- Jul 2016}&{\bf Senior developer, CD-adapco, London}\\
+&{Designed and implemented most of the adjoint differentiation of the Navier-Stokes equations in Star-CCM+, along with its low-level testing framework. The work of implementing the adjoint derviative touched most of the codebase, of which I contributed more than 300,000 lines of code.}
+
+{Alongside the work, I initiated a professional development course at CD-adapco, running a series of presentations on {\CC}, examining common pitfalls, new features, idioms, and reflection techniques.}\\[5pt]
+%
+{Apr 2009 -- Dec 2011}&{\bf Post-doctoral research, Queen Mary, University of London}\\
+&{Developed a source-code transformation approach to generating the adjoint derivative of the Navier-Stokes equations. This approach was then applied to commercial software. In addition, a domain-decomposed parallel implementation of a Navier-Stokes solver was written in order to explore the extension of the approach to parallel algorithms.}\\[5pt]
+\end{tabular}
+
+\section*{Education}
+\begin{tabular}{L!{\VRule}R}
+{Sep 2005 -- Jan 2009}&{\bf Doctoral research, University of Manchester}\\
+&{Attempted to resolve the Further Work of two theses on simulating spray propagation and impaction, from an Eulerian frame of reference. This work presented solutions to spray edge capturing, the inversion of probability density functions, capturing flow details at very small scales, and interaction of interpenetrating sprays.
+
+During my research, I tutored and ran laboratory work for second and third year Thermodynamics, Fluid Dynamics and Programming, and helped with open day laboratory presentations in the department.}\\[5pt]
+%
+{Sep 2002 -- Jun 2005}&{\bf Bachelor of Mechanical Engineering, UMIST, Manchester}\\
+&{Specialised in Thermodynamics and Computational Fluid Dynamics. The final year project examined the behaviour of LPG fuel sprays using an academic spray simulation code.}\\[5pt]
+\end{tabular}
+
+\section*{Academic topics}
+\begin{tabular}{L!{\VRule}R}
+{CD / Siemens}&{Adjoint Differentiation using {\CC}{14} EDSLs}\\[5pt]
+%
+{CD-adapco}&{Differentiation Techniques via EDSLs $|$ {\CC} in depth $|$ Parsing, Expression Trees $|$ Code Analysis, Machine Architecture}\\[5pt]
+%
+{Post-doc}&{Automatic Differentiation $|$ Parallel Computation, Domain Decomposition, Message Passing $|$ Optimisation Techniques}\\[5pt]
+%
+{Ph.D}&{Computational Fluid Dynamics $|$ Linear Solvers $|$ Probability Density Functions $|$ Spray Hydrodynamics $|$ Mesh, Graph and Matrix Representations}\\[5pt]
+%
+{BEng}&{Thermodynamics $|$ Fluid Dynamics $|$ Computational Fluid Dynamics}\\[5pt]
+%
+\end{tabular}
+
+
+\bibliographystyle{plain}
+\nobibliography{publications}
+
+\section*{Selected Presentations and Publications}
+\bibentry{jones2016proceedings}\\[5pt]
+\bibentry{jones2013presentation}\\[5pt]
+\bibentry{jones2012proceedings}\\[5pt]
+\bibentry{jones2012journal}\\[5pt]
+\bibentry{jones2011proceedings}\\[5pt]
+\bibentry{jones2010presentation}\\[5pt]
+\bibentry{jones2010proceedings}\\[5pt]
+\bibentry{jones2010presentation}\\[5pt]
+\bibentry{jones2008proceedings}\\[5pt]
+\bibentry{jones2008presentation}\\[5pt]
+\end{document}
