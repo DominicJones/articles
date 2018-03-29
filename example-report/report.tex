@@ -1,0 +1,46 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{fullpage}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{float}
+\usepackage{url}
+
+\bibliographystyle{plainnat}
+
+\title{Report Title}
+\author{Author Name}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Introduction}
+This report reports the results of a computation of a function.
+
+\section*{Results}
+Figure \ref{fig:graph} shows $f(x) =  x^2$ for $0 \leq x \leq 5$. This is very interesting \citep{greenwade93}.
+%%
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{graph}
+  \caption{Graph of $f(x) = x^2$}
+  \label{fig:graph}
+\end{figure}
+%%
+Equation \ref{eqn:x_times_x} is the same function but written in a different way:
+%%
+\begin{equation} \label{eqn:x_times_x}
+f = x \times x
+\end{equation}
+%%
+
+\section*{Links}
+For further reading, see \url{http://www.andy-roberts.net/writing/latex}
+
+\bibliography{references}
+\end{document}
