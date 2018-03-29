@@ -1,0 +1,239 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{url}
+\usepackage[numbers]{natbib}
+\usepackage[dvips]{graphicx}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{subfigure}
+\usepackage{indentfirst}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{nopageno}
+% \usepackage{times}
+
+\pagestyle{empty}
+
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
+
+\definecolor{lstgray}{gray}{0.95}
+
+\lstset{ %
+  language=C++,
+  captionpos=b,
+  basicstyle=\footnotesize,
+  %% backgroundcolor=\color{lstgray},
+  %% frame=single,
+  frame=tb,
+  %% frameround=tttt,
+  tabsize=2,
+  breaklines=true,
+  breakatwhitespace=false,
+  numbers=left,
+  %% numbersep=5pt,
+  %% numberstyle=\tiny\color{lstgray},
+  xleftmargin=50pt,
+  xrightmargin=50pt,
+  morekeywords={in,out,inout,constexpr}
+}
+
+%% \lstset{frame=L, language=C++, basicstyle=\footnotesize\ttfamily, captionpos=b, keepspaces=true, columns=flexible}
+
+\setlength{\columnsep}{8mm}
+\setlength{\parindent}{4mm}
+\renewcommand{\refname}{\Large{References}}
+
+
+\title{AD2016 - Block Scope Differentiation}
+\author{Dominic P Jones\footnote{CD-adapco, London W6 7NL, \texttt{dominic.jones@cd-adapco.com}}}
+\date{March 2016}
+
+
+\begin{document}
+\maketitle
+
+
+%% \begin{abstract}
+%% To ease the burden of manually differentiating arithmetic expressions, required for implementing adjoint solvers, a methodology is presented which automatically performs the differentiation of an expression or block of expressions and is acceptably efficient for commercial software. The methodology leverages a collection high level language features and patterns in concert to provide a means of reversing generated differentiated statements whilst faciliating optimal inlining of code. No operator recording is performed and proper \texttt{const} qualification is maintained for primal and derivative data. Generated adjoint code was found to be less than four times slower than its primal for simple expressions and less than ten times slower for expressions involving delegation. Whilst the the functionality of the methology is limited, it is sufficiently useful so as to be applied to loop code blocks typical of finite volume algorithms.
+%% \\\\{\noindent \emph{Keywords:} Expression Templates, Operator Overloading, Algorithmic Differentiation, Adjoint, {\CC} }
+%% \end{abstract}
+
+
+\section{Introduction}
+Two dominant methodologies exist for computing the differential of an algorithm without having to explicitly program its derivative: the first and more popular is to replace the floating point type of the algorithm with another type which augments the relational behaviour of the original floating point type with the side effects of recording every operation and associated state to some unique stack.
+ %% \citep{Griewank1999ACA}
+The derivative is evaluated by interpreting the stack after the algorithm has completed its execution. This method is commonly referred to, in context, as operator overloading. The second methodology is to use a tool to read the source code which implements the algorithm, and have the tool generate new source code which contains the implementation of the original algorithm and its derivative.
+ %% \citep{TapenadeRef13}
+
+Both methods have inherent limitations with respect to their application to large industrial codes: the first method destroys compiler optimisation opportunities due to its side effects and its exclusively run-time governed interpretation of the heap-stored stack. The second potentially retains the high-performance characteristics associated to manually implemented differentiated code, but is generally difficult, if not impossible, to apply it to codes written modern system programming languages due to their expansive complexity.
+
+Since the operator overloading approach recasts the fundamental numerical data type, the primal data must always be accessed in tandem with the derivative data. In the case of adjoint evaluation, there is a conflict of use: the primal will only be read, whilst the adjoint will be modifiable. Binding the data prevents any distinction. Consequently, ambiguity of \texttt{const} correctness is introduced, and, in the case of parallel computation, inter-partition exchanges are unnecessarily doubled in size.
+
+Performance is a perennial issue in industrial numerical software, and especially in the field Computational Fluid Dynamics, where enormous computational resources are dedicated to solving simulations. It would not be unreasonable for the user of such software to expect the adjoint of a flow simulation to take about the same time as the flow simulation itself requiring proportional similar memory. To achieve this parity, both the flow algorithm and its adjoint would need to have similar implementation characteristics and compile to highly efficient machine code. A compromise on efficiency from the outset regarding how the adjoint is implemented would hinder the adoption of the feature, especially for industrial users to routinely simulate flow problems close to the maximum capacity afforded by their systems.
+
+In addition to these difficulties, there is the often overlooked but critical issue of program build varieties. It is already common to have two versions of a numerical analysis software, one compiled with mixed precision floating point types and the other with double precision types. With a continuous delivery build system, every variety of the released program must be compiled and tested on a nightly basis. If another version was added, such as build using a differentiable double precision type, the resources required to absorb this extra work load may very well outweigh the perceived benefit in the added functionality being delivered.
+
+With these constraints in mind, hand coding the required differentiated components appears to emerge as the path of least resistance for obtaining the desired adjoint solver. It is under this perspective that the following work pursued, whose aim is of offering some helping-hand to carrying out the task whilst minimising performance compromises.
+
+\section{Methodology}
+Consider the contrived function in Listing \ref{lst:evaluate} which has two input fields and one output field. By templating this function on a differentiation mode and renaming \texttt{Field} and \texttt{double} as types dependent on the provided mode, the proposed methodology enables the function to compute its primal, tangent or adjoint. Evaluating any of the modes is as trivial as calling the function with the correct mode; no recording of operations is performed.
+
+\begin{lstlisting}[caption={The common task of looping over all elements, filling the output field.}, label=lst:evaluate]
+void evaluate(Region const &region)
+// becomes: template<DrvMode mode> void evaluate(Region const &region)
+{
+  using double_t = double;
+  // becomes: using double_t = Drv<mode, TypeValue<double, 7> >;
+
+  Field<const Pressure, Cell> fp(region);
+  Field<const Volume, Cell> fv(region);
+  Field<Temperature, Cell> ft(region);
+  // becomes: Drv<mode, Field<const Pressure, Cell> > fp(region); ... etc
+
+  FieldIndex<Cell> it(region);
+  for (; it.test(); it.increment())
+  {
+    /* cache the inputs */
+    double_t const A(fp[it]);
+    double_t const B(fv[it]);
+
+    /* compute some complicated terms... */
+    double_t const t(A * B + sin(B / A));
+    double_t const u(cos(A / B) - t * A + B / t);
+    double_t const v(-B / A + u / t - B * u / t);
+    double_t const w(A * (t + u / v) * B / t);
+    double_t const x(v > w? (double_t(w)): double_t(-w));
+
+    /* write the result */
+    ft[it] = A > B? double_t(x * sin(w) / A): double_t(x * cos(w) * B);
+  }
+}
+\end{lstlisting}
+
+\subsection{Destructors}
+Adjoint evaluation requires the reversing of the sequence of operations. This is triggered by the destructors of the local objects within the loop block scope. Expressions are captured and stored by the local objects during their construction. These captured expressions are retained in an opaque manner (i.e. as an array of \texttt{char}s) along with a pointer to its \texttt{adjoint} method, which has an assumed signature. Allied with these two pieces of data, the object triggers the execution of the expression adjoint when it goes out of scope.
+
+Since the result is assigned rather than constructed and returned, its expression adjoint is evaluated immediately. This is a reasonable solution provided the state is not later mutated with anything other than accumulation operations.
+
+The use of the block scope as a trigger mechanism for adjoint implies that nested blocks cannot be permitted around local objects. Whilst this is unenforceable, this methodology has the prerequisite that code must be functionally pure, ruling out the possibility of block scopes in correctly written code.
+
+\subsection{Functional Purity}
+The dominant context of this methodology is the prerequisite of functional purity of the components of the program to be differentiated. This is a difficult prerequisite to honour, but is possible and is ultimately beneficial regardless of whether or not its pursuit is for the sake of adopting this methodology to compute derivatives. In the context of programming in {\CC}, this can be summarised by the directives of: never passing an argument by non-\texttt{const} reference and always initializing class member data in the constructor member initialization list.
+
+\subsection{Referenced State}
+When an expression is evaluated in the adjoint mode, the ultimate data storing the derivative accumulation of the terms need to be written to. To achieve this, the state of all adjoint expression objects contains the primal value, the derivative value, and a reference which, upon construction, holds the address of the derivative value passed in (Listing \ref{lst:expr_t:adjoint}). If no derivative parameter is supplied, as in the case when it is constructed from an expression (via a sub-class), the reference holds the address of its own derivative value.
+
+\begin{lstlisting}[caption={The adjoint type for a \texttt{double}}, label=lst:expr_t:adjoint]
+template<typename double_t>
+class Drv<
+  DrvMode::Adjoint,
+  double_t,
+  typename std::enable_if<std::is_same<double, double_t>::value>::type>
+  : public DrvExpression<DrvMode::Adjoint, double, Drv<DrvMode::Adjoint, double_t> >
+{
+public:
+  Drv(double const &primal)
+    : _primal(primal)
+    , _derivative(0)
+    , _adjoint(_derivative)
+  {}
+
+  Drv(double const &primal, double &derivative)
+    : _primal(primal)
+    , _derivative(derivative)
+    , _adjoint(derivative)
+  {}
+
+  double primal() const { return _primal; }
+
+  void adjoint(double const &derivative) const { _adjoint += derivative; }
+
+protected:
+  double const _primal;
+  double _derivative;
+
+private:
+  double &_adjoint;
+};
+\end{lstlisting}
+
+In the context of evaluating the adjoint of expressions, copies of adjoint objects are made. When the default copy constructor is invoked, all member data is literally copied so that the new object's adjoint reference holds the address of the copied derivative value, not to its own, enabling adjoint results to be correctly accumulated to its ultimate sources.
+
+\subsection{Capturing Expressions}
+The expression template technique relies on the ability to assign one object to another without the latter having inherent knowledge of the former's type (i.e. the latter could never own an instance of the former within the constraints of the type system). For the evaluation of the tangent derivative this does not present a problem since the primal and derivative can be evaluated at the same time. For the evaluation of adjoints, somehow the expression received as the argument of the constructor must be stored by the object so as to be later evaluated in an adjoint manner when its destructor is called, i.e. somehow the host must own a copy of the assigned object \emph{and} be able to make use of it.
+
+Since the type of the expression object is lost once the constructor is evaluated, only raw data can be retained. Alone, nothing useful can be done with the raw data, but a delegate to a member function associated to the raw data and the original type of the expression enables the host object to evaluate the delegate. This is what is done in the destructor of Listing \ref{lst:capture} to trigger the adjoint evaluation of the captured expression.
+
+Two important details are noted here: the first is that despite the standard library offering tools for creating and using delegates (\texttt{std::bind} and \texttt{std::function}), their performance is suboptimal as they are general purpose tools (typically invoking heap allocations) so a method-to-function trait class is used instead. The second point is that in order to capture the expression, a sufficiently large block of raw (stack) storage is required. The required size cannot be known up front, so templating the host class on a suitable integral value to dictate the maximum size is resorted to.
+
+\begin{lstlisting}[caption={Capturing an expression for deferred evaluation}, label=lst:capture]
+template<typename double_v_t>
+class Drv<
+  DrvMode::Adjoint,
+  double_v_t,
+  typename std::enable_if<std::is_same<double_v<double_v_t::value()>, double_v_t>::value>::type>
+  : public Drv<DrvMode::Adjoint, double>
+{
+public:
+  // 'adjoint' method signature
+  using Function = void(*)(void const * const this_, double const &derivative_);
+
+  template<typename Expr_t>
+  Drv(Expr_t const &expr)
+    : Drv<DrvMode::Adjoint, double>(expr.primal())
+    , _object(this->object(expr))
+    , _function(this->function<Expr_t>())
+  {}
+
+  ~Drv() { this->adjoint(_derivative); }
+
+  void adjoint(double const &derivative) const
+  {
+    if (_function) { (*_function)(_object, derivative); }
+  }
+
+private:
+  template<typename Expr_t>
+  void const * object(Expr_t const &expr)
+  {
+    static_assert(sizeof(_stack) >= sizeof(expr), "");
+    std::memcpy(_stack.data(), &expr, sizeof(expr));
+    return _stack.data();
+  }
+
+  template<typename Expr_t>
+  static Function function()
+  {
+    using Traits = FunctionTraits<decltype(&Expr_t::adjoint)>;
+    return &Traits::template function<&Expr_t::adjoint>;
+  }
+
+  static constexpr std::size_t size()
+  {
+    return {sizeof(double) * double_v_t::value()};
+  }
+
+  std::array<char, size()> _stack;
+  void const * const _object;
+  Function const _function;
+};
+\end{lstlisting}
+
+The reason for splitting the adjoint form of the \texttt{double} class into a super-class and and sub-class is to enable the latter to capture constructs built from the former. In other words, the the object being captured cannot be some product of other terms of the same type of that which is capturing the expression. The size of that captured must be less than the cache size of the object doing the capturing. This would be impossible if all adjoint \texttt{double} types were identical. Instead, when building up the expression type, the operands must be type-sliced to its super-class (and owned by-value rather than by-reference).
+
+\subsection{Optimisation}
+To obtain the run-time performance achieved in this work, an optimisation must be made concerning what a given operator (such as a binary operator) holds as member data. Ordinarily, these operator classes hold copies of their operands, as oppose to \texttt{const}-qualified references, since any of the received operators may be temporaries, i.e. previous expression results. However, if either of them are not expression types, then they necessarily must be named objects, meaning they can be safely referenced. Doing so improves run-time performance by as much as 20\%.
+
+\section{Performance}
+The methodology outlined in this paper incurs a run-time cost of 2.7, relative to the primal, for the adjoint evaluation of Listing \ref{lst:evaluate}. The size of the \texttt{std::array} of \texttt{char}s used to capture assigned expressions (Listing \ref{lst:capture}) is set to the minimum compilable value, though the effect of doubling, trebling and quadrupling the array size showed no meaningful trend in the effect on execution time. To compare the run-time performance of the adjoint, the Adept library \citep{Hogan2014FRM} was used to evaluate the adjoint of the same function. Its normalised execution time was 3.3.
+
+Tests were compiled with g++ 5.1.0 (with the \texttt{-O3} flag) on a machine running Intel Xeon E5-2650 processors. Results presented are obtained by computing the median-average run-time of 50 executions, where the field size is 100,000 elements.
+
+\section{Conclusion}
+A highly performant tool has been developed for aiding the implementon of adjoint code. Its functionality is limited, but what is does support, namely blocks of pure-functional numerical expressions, it supports very well. No change of fundamental numerical type is required at the lowest level, nor an external language parsing tool, nor any post-evaluation stack interpretation.
+
+\bibliographystyle{plainnat}
+%% \bibliographystyle{unsrt}
+\bibliography{references}
+\end{document}

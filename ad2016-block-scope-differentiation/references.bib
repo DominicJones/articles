@@ -1,0 +1,61 @@
+@article{TapenadeRef13,
+  author = {Hasco{\"e}t, L. and Pascual, V.},
+  title = {The {T}apenade {A}utomatic {D}ifferentiation tool: {P}rinciples, {M}odel, and {S}pecification},
+  journal = "{ACM} {T}ransactions {O}n {M}athematical {S}oftware",
+  volume = 39,
+  number = 3,
+  URL = "http://dx.doi.org/10.1145/2450153.2450158",
+  year=2013
+}
+
+
+@TECHREPORT{Griewank1999ACA,
+       author = "Andreas Griewank and David Juedes and H. Mitev and Jean Utke and Olaf Vogel and
+         Andrea Walther",
+       title = "{ADOL-C}: A Package for the Automatic Differentiation of Algorithms Written in
+         {C/C++}",
+       note = "Updated version of the paper published in {\it ACM Trans. Math. Software} 22,
+         1996, 131--167",
+       institution = "Institute of Scientific Computing, Technical University Dresden",
+       key = "Griewank1999ACA",
+       referred = "[Vogel2002AGT].",
+       ad_tools = "ADOL-C",
+       year = "1999"
+}
+
+
+@ARTICLE{Hogan2014FRM,
+       author = "Robin J. Hogan",
+       title = "Fast Reverse-Mode Automatic Differentiation Using Expression Templates in {C++}",
+       journal = "{ACM} Transactions on Mathematical Software",
+       pages = "26:1--26:24",
+       url = "http://doi.acm.org/10.1145/2560359",
+       accepted = "9 December 2013",
+       abstract = "Gradient-based optimization problems are encountered in many fields, but the
+         associated task of differentiating large computer algorithms can be formidable. The
+         operator-overloading approach to performing reverse-mode automatic differentiation is the most
+         convenient for the user but current implementations are typically 10-35 times slower than the
+         original algorithm. In this paper a fast new operator-overloading method is presented that uses the
+         \textit{expression template} programming technique in C++ to provide a compile-time
+         representation of each mathematical expression as a computational graph that can be efficiently
+         traversed in either direction. Benchmarking with four different numerical algorithms shows this
+         approach to be 2.6--9 times faster than current operator-overloading libraries, and 1.3--7.7 times
+         more efficient in memory usage. It is typically less than 4 times the computational cost of the
+         original algorithm, although poorer performance is found for all libraries in the case of simple
+         loops containing no mathematical functions. An implementation is freely available in the
+         \textit{Adept} C++ software library.",
+       volume = "40",
+       number = "4",
+       year = "2014",
+       month = "jun",
+       ad_tools = "Adept"
+}
+
+
+@MISC{Mueller2014,
+  author = {M\"uller, Oliver},
+  title = {C++ {D}elegates {O}n {S}teroids},
+  month = {jan},
+  year = {2014},
+  url = {http://blog.coldflake.com/posts/C++-delegates-on-steroids/}
+}
