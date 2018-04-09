@@ -47,7 +47,7 @@
 
 \title{Compile Time Differentiation}
 \author{Dominic P Jones\footnote{Netherhall House, London NW3 5SA, \texttt{dominic.jones@gmx.co.uk}}}
-\date{August 2017}
+\date{\today}
 
 
 \begin{document}
@@ -55,26 +55,60 @@
 
 
 \begin{abstract}
-To ease the burden of manually differentiating arithmetic expressions, typically required for implementing adjoint solvers, a methodology is presented which automatically performs the differentiation of an expression or a block of expressions and yields more efficient machine code than its equivalent source transformation implementation \citep{TapenadeRef13}. The methodology leverages template metaprogramming techniques to provide a means of generating the differentiated statements whilst faciliating perfect inlining of code. Whilst the the functionality of the methology is limited, it is sufficiently useful so as to be applied to loop code blocks typical of finite volume or finite element algorithms.
-\\\\{\noindent \emph{Keywords:} Expression Templates, Operator Overloading, Algorithmic Differentiation, Adjoint, {\CC}, Template Metaprogramming }
+To ease the burden of manually differentiating arithmetic expressions, typically required for implementing adjoint solvers, a methodology is presented which automatically performs the differentiation of an expression or a
+block of expressions and yields more efficient machine code than its equivalent source transformation implementation \citep{TapenadeRef13}. The methodology leverages template metaprogramming techniques to provide a means of generating
+the differentiated statements whilst facilitating near perfect inlining of code. Whilst the the functionality of the
+methodology is limited, it presents what level of run-time performance is achievable.
+\\\\{\noindent \emph{Keywords:} Expression Templates, Operator Overloading, Automatic Differentiation, Adjoint, {\CC}, Template Metaprogramming}
 \end{abstract}
 
 
 \section{Introduction}
-Two dominant methodologies exist for computing the differential of an algorithm without having to explicitly program its derivative: the first and more popular is to replace the floating point type of the algorithm with another type which augments the relational behaviour of the original floating point type with the side effects of recording every operation and associated state to some unique stack \citep{Griewank1999ACA}.
-The derivative is evaluated by interpreting the stack after the algorithm has completed its execution. This method is commonly referred to, in context, as operator overloading. The second methodology is to use a tool to read the source code which implements the algorithm, and have the tool generate new source code which contains the implementation of the original algorithm and its derivative \citep{TapenadeRef13}.
+Two dominant methodologies exist for computing the differential of an algorithm without having to explicitly
+program its derivative: the first and more popular is to replace the floating point type of the algorithm with another
+type which augments the relational behaviour of the original floating point type with the side effects of recording every
+operation and associated state to some unique stack \citep{Griewank1999ACA}. The derivative is evaluated by interpreting the stack after
+the algorithm has completed its execution. This method is commonly referred to, in context, as operator overloading.
+The second methodology is to use a tool to read the source code which implements the algorithm, and have the tool
+generate new source code which contains the implementation of the original algorithm and its derivative \citep{TapenadeRef13}.
 
-Both methods have inherent limitations with respect to their application to large industrial codes: the first method destroys compiler optimisation opportunities due to its side effects and its exclusively run-time governed interpretation of the heap-stored stack. The second potentially retains the high-performance characteristics associated to manually implemented differentiated code, but is generally difficult, if not impossible, to apply it to codes written modern system programming languages due to their expansive complexity.
+Both methods have significant limitations with respect to their application to large industrial codes: the first method
+destroys compiler optimisation opportunities due to its side effects and its exclusively run-time governed interpretation
+of the heap-stored stack. The second potentially retains the high-performance characteristics associated to manually
+implemented differentiated code, but is generally difficult, if not impossible, to apply it to codes written modern system
+programming languages due to their expansive complexity.
 
-Performance is a perennial issue in industrial numerical software, and especially in the field Computational Fluid Dynamics, where enormous computational resources are dedicated to solving simulations. It would not be unreasonable for the user of such software to expect the adjoint of a flow simulation to take about the same time as the flow simulation itself requiring proportional similar memory. To achieve this parity, both the flow algorithm and its adjoint would need to have similar implementation characteristics and compile to highly efficient machine code. A compromise on efficiency from the outset regarding how the adjoint is implemented would hinder the adoption of the feature, especially for industrial users to routinely simulate flow problems close to the maximum capacity afforded by their systems.
+Performance is a perennial issue in industrial numerical software, where enormous computational resources are
+dedicated to solving simulations. It would not be unreasonable for the user of such software to expect the adjoint of a
+simulation to take about the same time as the primal simulation itself and requiring a similar memory footprint. To
+achieve this parity, both the primal algorithm and its adjoint would need to have similar implementation characteristics
+and compile to highly efficient machine code. A compromise on efficiency from the outset regarding how the adjoint is
+implemented would hinder the adoption of the feature, especially for industrial users to routinely simulate problems
+close to the maximum capacity afforded by their systems.
 
-In addition to these difficulties, there is the often overlooked but critical issue of program build varieties. It is already common to have two versions of a numerical analysis software, one compiled with mixed precision floating point types and the other with double precision types. With a continuous delivery build system, every variety of the released program must be compiled and tested on a nightly basis. If another version was added, such as build using a differentiable double precision type, the resources required to absorb this extra work load may very well outweigh the perceived benefit in the added functionality being delivered.
+In addition to these difficulties, there is the often overlooked but critical issue of program build varieties. It is
+already common to have two versions of a numerical analysis software, one compiled with mixed precision floating
+point types and the other with double precision types. With a continuous delivery build system, every variety of the
+released program must be compiled and tested on a nightly basis. If another version was added, such as build using a
+differentiable double precision type, the resources required to absorb this extra work load may very well outweigh the
+perceived benefit in the added functionality being delivered.
 
-With these constraints in mind, hand coding the required differentiated components appears to emerge as the path of least resistance for obtaining the desired adjoint solver. It is under this perspective that the following work pursued, whose aim is of offering some helping-hand to carrying out the task whilst minimising performance compromises.
+With these constraints in mind, hand coding the required differentiated components appears to emerge as the
+path of least resistance for obtaining the desired adjoint solver. It is under this perspective that the following work
+pursued, whose aim is of offering some helping-hand, in the context of a {\CC} codebase, to carrying out the task whilst
+minimising performance compromises.
+
+This is not the first attempt to produce a high-performance adjoint differentiation library for {\CC} \citep{Leppkes2017}, however this
+paper seeks to document one approach to implementing a solution.
+
 
 \section{Methodology}
-Consider the contrived function in Listing \ref{lst:example} which has two input fields and one output field. By templating this function on a differentiation mode and renaming \texttt{Field} and \texttt{double} as types dependent on the provided mode, the proposed methodology enables the function to compute its primal, tangent or adjoint. Evaluating any of the modes is as trivial as calling the function with the correct mode; no recording of operations is performed.
+Consider the contrived function in Listing \ref{lst:example} which has two input variables and one output variable. The proposed
+methodology enables the function to compute the primal and its adjoint derivative by simply calling the function; no
+recording of operations is performed at run-time.
 
+
+%% listing 1
 \begin{lstlisting}[caption={All terminal nodes require unique types, both for active and passive values.}, label=lst:example]
 void example(Terminal<A> const &a,
              Terminal<B> const &b,
@@ -95,62 +129,292 @@ void example(Terminal<A> const &a,
 }
 \end{lstlisting}
 
-\subsection{Unique Types}
-\texttt{\_\_COUNTER\_\_} is a non-standard preprocessor (though is supported by GCC, Clang and MSVS) macro which is used in the implemention of \texttt{UQ\(\)}. This counter is incremented on every use, providing a sure mechanism to generate the unique types for the passive values.
 
-\subsection{Functional Purity}
-The dominant context of this methodology is the prerequisite of functional purity of the components of the program to be differentiated. This is a difficult prerequisite to honour, but is possible and is ultimately beneficial regardless of whether or not its pursuit is for the sake of adopting this methodology to compute derivatives. In the context of programming in {\CC}, this can be summarised by the directives of: never passing an argument by non-\texttt{const} reference and always initializing class member data in the constructor member initialization list.
+\subsection{Destructors Approach}
+The order of destructor calls of the l-values (i.e. \texttt{tmp0}, etc) is exactly the order required for adjoint computation.
+However, leveraging this feature of {\CC} for this purpose is deliberately avoided in this methodology. The reason for
+this decision is that it is impossible to prevent double evaluation of the destructor in the case of a term existing as a
+temporary variable. The first destructor evaluation occurs when the temporary variable goes out of scope at the end
+of a statement. Here, no adjoint computation is wanted as it is premature. The second is when its copy goes out of
+scope at the end of the block scope, which is when the adjoint computation is wanted. Preventing one but not the
+other, however, would require a run-time flag, effectively ruining the sought high-performance wanted in this work.
+
+If, on the other hand, named types are used instead of auto, it is possible to avoid the run-time flag by making use
+of type slicing, offering good performance, but still yields sub-optimal performance \citep{jones2016proceedings}.
 
 \subsection{Location of State}
-Typical implementations of expression trees hold the intermediate state of the unary or binary operations \citep{Hogan2014FRM}. However, they need not do so. The absolute minimum of state is simply the addresses of the terminals and the values of the passive terms. This is the approach used here, and the reason for taking this approach is to maximise the liklihood of the copy constructor being inlined when the tree is being built. If the nodes hold the state then as the tree gets larger the copying operation becomes on par with the computation. One way to assure such exccessive work is avoided is to not hold intermediate state in the first place. Storage of intermidate values will be requred at some point, but the (static) allocation is delayed until the result assignment is reached.
+Typical implementations of expression trees hold the intermediate state of the unary or binary operations \citep{Hogan2014FRM}.
+However, they need not do so. The absolute minimum of state is simply the memory addresses of the terminals and
+the values of the passive terms. This is the approach used here, and the reason for taking this approach is to maximise
+the likelihood of all the copy constructors being inlined when the tree is being built. If the nodes hold state then as
+the tree gets larger the copying operation becomes on par with the computation. One way to assure such excessive
+work is avoided is to not hold intermediate state in the first place. Storage of intermediate values will be required at
+some point, but the (static) allocation is delayed until the result assignment is reached.
 
-\subsection{Metaprogramming Utilities}
-Brigand metaprogramming library was made use of as a foundational set of functions for implementing the algorithms needed to analyse and transform the expression tree into a list of operations.
+\subsection{Leveraging Tree Structure}
+A naive implementation of expression tree evaluation would implement a compute all strategy, i.e. all branches,
+whether or not they are duplicate branches, would be evaluated. Such duplicate branches would occur when a
+named variable is used more than once, or an intermediate (temporary) expression occurs more than once. The above
+mentioned destructor approach circumvents this duplicate evaluation because intermediate primal values are computed
+eagerly and stored locally during construction and the adjoint is evaluated exactly once during destruction of each
+l-value node.
 
-\section{Performance}
-The methodology outlined in this paper incurs a run-time cost of 1.34, relative to the primal, for the adjoint evaluation of Listing \ref{lst:test}. To compare the run-time performance of the adjoint, the source code (after lowering it to {C} code) was supplied to Tapenade \citep{TapenadeRef13}, a source transformation differentation tool. Its run-time cost was 1.51, relative to the primal.
+This approach, storing no intermediate state and avoiding the use of destructors, trims duplicate branches by
+recording the node types in a unique type list as the tree is being constructed. If all distinct terminals in the tree
+have unique types then duplicate branches can be safely pruned, thus providing at the root a list of exactly the nodes
+which need evaluating.
 
-Tests were compiled with g++ 6.2.0 (with the \texttt{-O3} flag) on a machine running Intel Xeon E5-2650 processors. Results presented are obtained by computing the median-average run-time of 50 sets of evaluations, where each set performs 100,000 invocations of the tested function.
+Building this list of unique types, however, requires attention. The order of adjoint evaluation is critical, and it is
+not simply the naive reverse-order of the list of node types built during construction. Rather, the list must be ordered
+by node depth. This important detail introduces a significant complication into the implementation, but at the same
+time is the means by which sensible compilation times can be achieved.
 
-\begin{lstlisting}[caption={The test function, making much use of transcendental functions}, label=lst:test]
-void test(Terminal<A> const &a,
-          Terminal<B> const &b,
-          Terminal<R> &r)
+Consider the Binary node class in Listing \ref{lst:binary}. Two approaches could be used to build the \texttt{node\_list\_t} type: a flat,
+one dimensional list of types ordered by depth, or a two dimensional list of lists, where each subgroup contains types
+of common depth. The latter approach is used here in order to facilitate search operations on the list when tree is
+finally ready for evaluation. (\texttt{mp\_list} is an empty variadic template class.)
+
+
+%% listing 2
+\begin{lstlisting}[caption={Template metafunctions are used extensively to build the node list.}, label=lst:binary]
+template<typename Fn, typename L, typename R>
+struct Binary
+  // Node depth accessed via Binary::value
+  : std::integral_constant<int, std::max(L::value, R::value) + 1>
 {
-  auto const c1 = UQ(1);
-  auto const c2 = UQ(2);
-  auto const c3 = UQ(3);
-  auto const c4 = UQ(4);
-  auto const c5 = UQ(5);
-  auto const c6 = UQ(6);
-  auto const c7 = UQ(7);
-  auto const c8 = UQ(8);
-  auto const c9 = UQ(9);
-  auto const c10 = UQ(10);
-  auto const c11 = UQ(11);
-  auto const c12 = UQ(12);
+  // Increase the child node lists to make them of equal length
+  using _l = mp_resize<Binary::value, typename L::node_list_t,mp_list<>>;
+  using _r = mp_resize<Binary::value, typename R::node_list_t,mp_list<>>;
 
-  auto const tmp0 = c1 * a * sin(a) / cos(b) * c2;
-  auto const tmp1 = b * c3 * sin(b) / cos(a);
-  auto const tmp2 = sin(tmp0) * tmp1 + sin(tmp1) * tmp0;
-  auto const tmp3 = sin(tmp2) / cos(tmp2) + cos(tmp0) * c4 / sin(tmp0);
-  auto const tmp4 = sin(tmp2) / c5 * cos(tmp2) + cos(tmp1) / sin(tmp3);
-  auto const tmp5 = sin(tmp2) * cos(tmp4) + cos(tmp0) * sin(tmp1);
-  auto const tmp6 = c6 * sin(tmp2) / cos(tmp5) + cos(tmp0) / sin(tmp3);
-  auto const tmp7 = sin(tmp4) + cos(tmp6) + cos(tmp0) * c7 / sin(tmp5);
-  auto const tmp8 = sin(tmp1) / cos(tmp5) * cos(tmp0) * sin(tmp6);
-  auto const tmp9 = sin(tmp6) + c8 * cos(tmp4) + cos(tmp0) / sin(tmp1);
-  auto const tmp10 = sin(tmp5) / cos(tmp3) + cos(tmp7) + sin(tmp2);
-  auto const tmp11 = sin(tmp8) * c9 * cos(tmp2) + cos(tmp0) / sin(tmp3);
-  auto const tmp12 = c10 * sin(tmp10) / cos(tmp1) + cos(tmp0) / sin(tmp4);
-  auto const tmp13 = sin(tmp12) + cos(tmp0) * c11 + cos(tmp0) / sin(tmp3);
-  auto const tmp14 = cos(tmp13 / sin(tmp0) + tmp6 / sin(tmp11) * c12 * tmp13 * tmp11 * tmp9);
-  r = tmp14;
+  // Merge the node lists, erasing any duplicates
+  using _lr = mp_uniq_merge<_l, _r>;
+
+  // Append this node (as a subgroup) to the end of the list
+  using node_list_t = mp_append<_lr, mp_list<mp_list<Binary>>>;
+
+  ...
+};
+\end{lstlisting}
+
+
+For nodes whose subnodes are both active, no additional state is introduced. However, in the case of a binary
+operator taking a passive value as an operand (Listing \ref{lst:passive}), this value must be stored somewhere. Storing the value on
+the node itself is a possibility but is avoided so as not to incur the cost of having to store pointers to all nodes. Passive
+values are, instead, accumulated in a stateful list (\texttt{std::tuple}). Having this arrangement introduces the requirement
+of mapping from the node list to the passive value list, which are not necessarily in the same order, since the former
+is depth ordered and the latter is constructor invocation ordered.
+
+
+%% listing 3
+\begin{lstlisting}[caption={Mixed arithmetic of active and passive operands.}, label=lst:passive]
+template<typename Fn, typename L, std::sizet ID>
+struct Binary<Fn, L, Unique<ID, double>>
+  : std::integral_constant<int, L::value + 1>
+{
+  //augment the list type of passive values
+  using passive_list_t = mp_append<typename L::passive_list_t,
+    std::tuple<Passive<Binary, double>>>;
+
+  //concatenate and store augmented list
+  Binary(L const &l, Unique<ID, double> const &r)
+    : passive_list(std::tuple_cat(
+      l.passive_list, std::make_tuple(Passive<Binary, double>{r.value})))
+  {}
+
+  passive_list_t const passive_list;
+
+  ...
+};
+\end{lstlisting}
+
+
+\subsection{Unique Types}
+Unique types for every terminal, including passive value terminals, are required because when the \texttt{node\_list} is
+being constructed, duplicate nodes are removed. The assumption in removing duplicates is that they unambiguously
+correspond to certain numerical terms, which can only be guaranteed if every terminal is uniquely tagged. The
+following contrived example (Listing \ref{lst:unique}) highlights the issue.
+
+
+%% listing 4
+\begin{lstlisting}[caption={Names cannot be extracted and so the type must be the carrier of identity.}, label=lst:unique]
+void example(Terminal<A> const &a,
+             Terminal<B> const &b,
+             Terminal<R> &r)
+{
+  auto const tmp0 = a * b;
+  auto const tmp1 = tmp0 + 3.0d;
+  auto const tmp2 = tmp0 + 4.0d;
+  r = tmp1 / tmp2;
 }
 \end{lstlisting}
 
+
+The types of \texttt{tmp1} and \texttt{tmp2} are identical (i.e. \texttt{Binary<Add, Binary<Mul, Terminal<A>, Terminal<B>>, double>}),
+however, numerically they are distinct. Since the numerical distinction cannot be communicated at compile-time to the
+nodes being constructed, then without further measures, the result \texttt{r} would simply become \texttt{tmp1 / tmp1} (assuming
+that \texttt{tmp2} is the erased duplicate).
+
+The measure taken here to prevent this problem is to require that passive values be first wrapped in a unique
+type, (i.e. \texttt{Unique<int ID, typename T>}). This ensures that different passive values are treated differently, though
+it does mean that identical temporary values are treated differently, too, leading to a (probably negligible) source of
+inefficiency.
+
+The \texttt{ID} template argument of Unique is defined by \texttt{\_\_COUNTER\_\_}, which is a non-standard preprocessor macro (though
+is supported by GCC, Clang and MSVS). All of this is in turn wrapped up the macro function definition of \texttt{UQ}. The
+counter is incremented on every use, providing a sure mechanism to generate the unique types for the passive values.
+
+The value itself is of no consequence and so could be any unique number. Standard preprocessor macros that could
+partially emulate the role of \texttt{\_\_COUNTER\_\_} are \texttt{\_\_LINE\_\_} and \texttt{\_\_TIME\_\_} . However, whilst the the line number effectively
+would suffice, it would not guarantee correctness. The second would suffice but for the the fact the it only resolves to
+seconds, which is too coarse-grain to assure passive values receive different time-stamps.
+
+Having to wrap passive values in a non-standard preprocessor macro is the weakest aspect of the design, forcing
+the programmer to use a syntax that he would not expect to be needed. No obvious work-around is known, despite
+the fact that it is statically unambiguous where a named variable is being used.
+
+Whilst it is possible to inject unique identity (unary) nodes ahead of every node holding a passive value on the tree
+(using template expression tree transform methods, like that found in Boost Proto \citep{Niebler2008}) without having to make use of preprocessor macros and unique
+type wrapper classes, the the functionality is still unsatisfactory. This approach has the effect of requiring the the
+recording of every occurrence of every passive value that appears on the node list, which quickly becomes overwhelming
+for large trees.
+
+Given that within the functionality that {\CC} presently offers (2017 standard) a viable solution cannot
+be implemented to solve the above described problem, a small language extension is proposed. In Listing \ref{lst:location}, if a new
+operator was defined, call it \texttt{varid()}, which returned the compiler’s internal index of the variable given it, then all
+unique terminals could be identified and identical terminals could be identified, too.
+
+
+%% listing 5
+\begin{lstlisting}[caption={A possible language extension of \texttt{varid()}, returning the internal index for a given variable.}, label=lst:location]
+template<typename Fn, typename L, typename R, uint64_t IL, uint64_t IR>
+struct UniqueBinary
+{
+  UniqueBinary(L const &l, R const &r);
+};
+
+template<typename L ,typename R>
+auto operator∗(L const &l, R const &r)
+  -> UniqueBinary<Mul, L, R, varid(l), varid(r)>
+{
+  return {l, r};
+}
+\end{lstlisting}
+
+
+Whilst such a language extension is unlikely because the introduction of a new keyword could break existing code, it is noted that the address-of operator can be used in a compile-time context, albeit only for equality comparisons (Listing \ref{lst:equality}). If this the address-of operator functionality was extended such that all logical comparisons were supported, this would imply that its value could be obtained and thus used as a unique identifier.
+
+
+\begin{lstlisting}[caption={Only equality operators (\texttt{==} and \texttt{!=}) can be used at compile-time, presently.}, label=lst:equality]
+template<typename L, typename R>
+auto constexpr cmp(L const &l, R const &r)
+{
+  return {&l == &r};
+}
+
+{
+  auto c0 = 7;
+  auto c1 = 9;
+
+  static_assert(cmp(c0, c0));
+  static_assert(!cmp(c0, c1));
+}
+\end{lstlisting}
+
+
+If the address-of operator were to represent the hash of the row, column and filename of where a variable is defined, this would serve as a means of identifying unique variables in the expression tree. Such an extension to the language would have no impact on existing code and would only incur compile-time cost upon use, which maybe non-trivial as it would need to trace any references to its origin. If the referenced variable cannot be traced, perhaps because it is in a separate translation unit, a compilation error would have to be returned.
+
+\begin{lstlisting}[caption={Define the compile-time address-of operator to return an effectively unique value}, label=lst:reflect]
+123456789 123456789 12345
+        10        20
+
+// main.cpp
+auto x = 42;
+auto constexpr y = &x; // reflect location of `x'
+
+
+//             y = hash(row, column, filename)
+//               = hash(5, 6, "main.cpp")
+\end{lstlisting}
+
+
+\subsection{Evaluating the Tree}
+Since neither the primal is evaluated upon construction of the nodes, nor the adjoint upon destruction of the l-
+values, all evaluation must be performed upon assignment to the result variable. This arrangement has a significant
+advantage and at the same time a significant disadvantage. The advantage is that the methodology works seamlessly
+with nested function calls (using auto return type in {\CC}14). This is facilitated because local variables in nested
+functions are not referenced by the tree, so when those variables go out of scope there is no risk of a segmentation
+fault. The disadvantage is that only a single assignment can be cleanly and efficiently supported. If more than one
+assignment is used then the tree will be evaluated again (from that required root node).
+
+Within the assignment operator of the result variable, primal and adjoint state are allocated on the stack, child
+indexing of the node list children are computed, and the mapping of the node list passive binary node types to the
+passive value list is determined. Once these steps are complete, the node list is iterated in order to compute the primal
+result, and then in reverse order to compute the adjoint derivatives.
+
+
+\subsection{Implementation Details}
+Adjoint specific code in this methodology is both a negligible amount and is trivial to implement. The vast majority
+of the code is template metafunctions for performing primary and secondary level operations on variadic template
+types. Most primary functions can be found in modern template metaprogramming libraries. In this work Brigand
+\citep{Falcou2017} has been used due to its flexibility. Secondary level algorithms were written specifically for this work, such as two
+dimensional searching, unique merging, graph dual construction, and list resizing.
+
+
+\section{Performance}
+To test the methodology outlined in this paper, two functions were used with the following properties:
+\textbf{Function 1}: nodes: 82, depth: 37, inputs: 2, passive values: 12,
+\textbf{Function 2}: nodes: 331, depth: 25, inputs: 5, passive values: 103.
+
+To compare the run-time performance of the adjoint, the source code (after lowering it to C code) was supplied to Tapenade \citep{TapenadeRef13}, a source
+transformation differentiation tool. Table 1 presents the execution times of the adjoint normalised by the primal along
+with the primal execution time and compilation time of the adjoint function using the compile time methodology for both functions.
+
+The tests were compiled with both g++ 7.2.0 and clang 3.8.0 (with the -O3 flag) on a machine running on an
+Intel Core i3-4130 processor with 4GB memory. Results presented are obtained by computing the median-average run-time of 250 sets
+of evaluations, where each set performs 100,000 invocations of the tested function.
+
+In Table \ref{table:results}, the results from both test functions convey seemingly unexpected characteristics, though a common tread is that the methodology does indeed generate the adjoint with comparable run times to its source transformed equivalent.
+
+Despite Function 1 having fewer nodes than function 2, its execution time is significantly longer. This is highly likely due the the former being composed of many transcendental functions and is significantly deeper.
+
+Compilation time for Function 1 is much shorter due to there being far fewer passive values to keep track of. In typical expression tree design, handling passive terms effectively reduces the complexity of the algorithm. However, in this approach specific nodes do not hold specific state but rather all nodes must participate in collecting and bookkeeping all accumulated state. This work is by far the most computationally expensive task, accounting for more than half of the compilation time for Function 1 and the vast majority of the time for Function 2. The compile-time cost is incurred in the constructor of the active-active binary nodes, where left and right state must be merged, filtered for duplicates then stored. Ideally, all this work `compiles out' to very simple copying of variables, though in practice only does so for relatively few passive values, as in the case of Function 1.
+
+The timings of Function 1 appear to be spurious (1.25x, 1.03x), and are not readily explained away. However, there are at least two possible cause of this. The first is the fact that the compile time approach orders the execution of operations in increasing depth, facilitating the pipelining of independent calculations. Without such reordering, the evaluation of terms will (unless specifically optimised by the compiler) proceed in the order dictated by the rules of operator precedence, causing a measurable increase in computational time due to cache stalling. Given that the tree is relatively deep and relatively easily compiled (implying good inlining), it is conceivable that the performance gain due to this significantly outweighs the ordering of operations dictated by the Tapenade generated implementation.
+
+The second reason, which is not in any way speculative, is that the methodology trims the number operations down from 68 (i.e. 82 nodes - 2 inputs - 12 passive values) to 40, in the \emph{primal} (in the adjoint, this is equates to a reduction of 93 operations), which is a significant reduction. This trimming occurs when subexpressions are repeated elsewhere in the tree rather than being factored out with named intermediate variables. In Function 1, duplicate subexpressions were deliberately included to compare against how Tapenade and the compiler would analyse and refactor the same code. Examining the Tapenade generated code, it appears that duplicate subexpressions are not refactored, thus leaving the work to the compiler, which from the results it appears not to optimise away.
+
+A surprising result from the Clang compiler is its relatively poor execution time for Function 1, which is twice that of g++. Analysis of this would require sifting through assembly code, but is beyond the scope of this work.
+
+The most promising result of the approach is Function 2 with Clang, despite its excessively long compilation time (most probably due to memory swapping). Here, for the larger case both a good execution and relative adjoint times are achieved. Whilst memory overhead clearly needs to be reduced substantially, through improved compile-time algorithms, the methodology is shown to realise its aim: that of producing highly efficient adjoint code via operator overloading.
+
+
+%% table 1
+\begin{table}[H]
+\centering
+\begin{tabular}{l | c | c | c | c | c }
+Function & Compiler & Compilation Time & Primal & CT differentiation & Tapenade AD \\
+\hline \hline
+F1 & g++ & 2.3s & 6.3ms & 1.25x & 1.48x \\
+F1 & clang  & 8.1s & 13.7ms & 1.03x & 2.61x \\
+\hline
+F2 & g++  & 49s & 2.1ms & 6.85x & 1.85x \\
+F2 & clang  & 12.8m & 2.3ms & 3.46x & 2.16x \\
+\end{tabular}
+\caption{Two test functions differentiated with the methodology presented and Tapenade.}
+\label{table:results}
+\end{table}
+
+
 \section{Conclusion}
-A high performance tool has been developed for aiding the implementon of adjoint code. Its functionality is limited, but what is does support, namely blocks of pure-functional numerical expressions, it supports very well. A better way of handling passive values is very much wanted, though seeking a more favourable solution may require a significantly different methodology to the one presented here. Futhermore, the limitation on single assignment is excessively stringent. Some way of being able to check-point the assignments in order to avoid duplicate evaluations is wanted. But again, probably a different methodology is required for this.
+A tool has been developed for constructing the adjoint derivative of a function while facilitating the compilation
+of near optimal object code. Its functionality is limited, but what is does support, namely blocks of pure-functional
+numerical expressions, it supports very well.
+
+A better way of handling passive values is wanted, though seeking a more favourable solution may require a
+significantly different methodology to the one presented here. Furthermore, the limitation on single assignment is
+stringent, so some way of being able to check-point multiple assignments in order to avoid duplicate full tree evaluations
+would make this approach applicable to far more scenarios.
+
 
 \bibliographystyle{plainnat}
 %% \bibliographystyle{unsrt}
