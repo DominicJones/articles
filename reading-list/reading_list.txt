@@ -2,25 +2,33 @@ philosophy:
 
 Aristotle: "Nicomachean Ethics"
 Augustine: "Confessions"
-M. Artigas: "The mind of the universe", "Knowing Things for Sure"
+M. Artigas: "The mind of the universe",
+  "Knowing Things for Sure"
 S. L. Brock: "The philosophy of Saint Thomas Aquinas"
 F. C. Copleston: "A History of Medieval Philosophy"
 J. P. Dougherty: "The Nature of Scientific Explanation" 
-E. Feser: "Scholastic Metaphysics", "Philosophy of the Mind", "Aquinas", "Five proofs of the existence of God", "The last superstition" 
+E. Feser: "Scholastic Metaphysics",
+  "Philosophy of the Mind",
+  "Aquinas",
+  "Five proofs of the existence of God",
+  "The last superstition" 
 K. W. Giberson: "Oracles of science" 
 J. Maritain: "Three Reformers: Luther, Descartes, Rousseau" 
 C. S. Lewis: "The four loves" 
 B. Mondin: "Philosophical Anthropology: Man: an Impossible Project?" 
 J. Navarro (editor): "Science and Faith Within Reason" 
 D. S. Oderberg: "Real Essentialism" 
-J. Ratzinger: "On Conscience", "Truth and Tolerance", "Christianity and the Crisis of Cultures"
+J. Ratzinger: "On Conscience",
+  "Truth and Tolerance",
+  "Christianity and the Crisis of Cultures"
 J. Ratzinger and J. Habermas: "Dialectics of Secularism: On Reason and Religion" 
 J. Ratzinger and M. Pera: "Without Roots: Europe, Relativism, Christianity, Islam"
 C. E. Rice: "50 Questions on the Natural Law" 
 R. Scruton: "Beauty" 
 R. J. Spitzer: "Ten Universal Principles: A Brief Philosophy of the Life Issues" 
 F. J. Sheed: "Communism and Man" 
-J. M. de Torre: "Christian philosophy", "Marxism, Socialism, and Christianity" 
+J. M. de Torre: "Christian philosophy",
+  "Marxism, Socialism, and Christianity" 
 R. Trigg: "Beyond Matter: why science needs metaphysics" 
 K. Wojtyla: "Love and Responsibility" 
 P. Kreeft: "A Shorter Summa", "Back to Virtue"
@@ -32,23 +40,43 @@ theology:
 
 J. H. Newman: "Apologia Pro Vita Sua" 
 John Paul II: "Theology of the Body"
-S.-T. Pinckaers: "Morality: The Catholic View", "The Sources of Christian Ethics" 
+S.-T. Pinckaers: "Morality: The Catholic View",
+  "The Sources of Christian Ethics" 
 F. Ocáriz: "Fundamental Theology" 
 P. O'Callaghan: "Children of God in the World" 
-J. Ratzinger: "Principles of Catholic Theology", "Called to Communion", "Introduction to Christianity", "Jesus of Nazareth", "Truth and Tolerance", "Church Fathers", "God is Near Us", "The Spirit of the Liturgy", "What It Means to Be a Christian", "In the Beginning"
+J. Ratzinger: "Principles of Catholic Theology",
+  "Called to Communion",
+  "Introduction to Christianity",
+  "Jesus of Nazareth",
+  "Truth and Tolerance",
+  "Church Fathers",
+  "God is Near Us",
+  "The Spirit of the Liturgy",
+  "What It Means to Be a Christian",
+  "In the Beginning"
 R. H. Schoeman: "Salvation Is from the Jews"
-F. Sheed: "Theology and Sanity", "Map of Life", "What Difference Does Jesus Make?", "Theology for Beginners"
-E. Boylan: "This Tremendous Lover", "Difficulties in Mental Prayer"
+F. Sheed: "Theology and Sanity",
+  "Map of Life",
+  "What Difference Does Jesus Make?",
+  "Theology for Beginners"
+E. Boylan: "This Tremendous Lover",
+  "Difficulties in Mental Prayer"
 Mgr Guerry: "The social teaching of the Church"
-S. Hahn: "Scripture Matters", "A Father Who Keeps His Promises", "The Lamb's Supper", "Hail, Holy Queen", "Reasons to Believe"
+S. Hahn: "Scripture Matters",
+  "A Father Who Keeps His Promises",
+  "The Lamb's Supper",
+  "Hail, Holy Queen",
+  "Reasons to Believe"
 Antonio Fuentes: "A Guide to the Bible"
-R. Knox: "The Creed in Slow Motion", "The mass in slow motion"
+R. Knox: "The Creed in Slow Motion",
+  "The mass in slow motion"
 J. M. de Torre: "The Divinity of Jesus Christ"
 P. Haffner: "The Sacramental Mystery"
 L. Trese: "The Faith Explained"
 S. Wyszinsky: "Work"
 T. More: "Sadness of Christ"
-J. Philippe: "Interior Freedom", "Time for God"
+J. Philippe: "Interior Freedom",
+  "Time for God"
 Teresa of Avila: "Interior Castle"
 Thérèse of Lisieux: "The Story of a Soul"
 S. Hahn: "Rome Sweet Home"
@@ -67,7 +95,10 @@ John Paul II, et al: "Catechism of the Catholic Church"
 Leo XIII: "Rerum Novarum"
 Paul VI: "Humanae Vitae"
 John Paull II: "Fies et Ratio"
-Benedict XVI: "Deus Caritas Est", "Sacramentum Caritatis", "Spe Salvi", "Caritas in Veritate"
+Benedict XVI: "Deus Caritas Est",
+  "Sacramentum Caritatis",
+  "Spe Salvi",
+  "Caritas in Veritate"
 
 
 history:
@@ -77,31 +108,51 @@ E. Duffy: "The Stripping of the Altars"
 H. D-Rops: "The Protestant Reformation" 
 G. M. Logan (editor): "The Cambridge Companion to Thomas More" 
 T. More: "Dialogue Concerning Heresies" 
-R. W. Rex: "The theology of John Fisher", "The Tudors", "The making of Martin Luther", "Henry VIII and the English Reformation" 
+R. W. Rex: "The theology of John Fisher",
+  "The Tudors",
+  "The making of Martin Luther",
+  "Henry VIII and the English Reformation" 
 
 
 literature:
 
-C. Dickens: "The Old Curiosity Shop", "Great Expectations", "David Copperfield"
+C. Dickens: "The Old Curiosity Shop",
+  "Great Expectations",
+  "David Copperfield"
 L. Tolstoy: "Anna Karenina"
-C. S. Lewis: "The Screwtape Letters", "The Great Divorce", "Till We Have Faces"
+C. S. Lewis: "The Screwtape Letters",
+  "The Great Divorce",
+  "Till We Have Faces"
 J. Austen: "Emma"
-O. Wilde: "The Picture of Dorian Gray", "The Importance of Being Earnest"
-E. Waugh: "Brideshead Revisited", "Sword of Honour", "A Handful of Dust"
+O. Wilde: "The Picture of Dorian Gray",
+  "The Importance of Being Earnest"
+E. Waugh: "Brideshead Revisited",
+  "Sword of Honour",
+  "A Handful of Dust"
 C. Brontë: "Jane Eyre"
 E. Brontë: "Wuthering Heights"
 T. More: "Utopia"
 D. Defoe: "Robinson Crusoe"
 R. L. Stevenson: "Treasure Island"
 E. Mannin: "Late have I loved thee"
-J. R. R. Tolkien: "The Lord of the Rings", "The Hobbit"
-G. K. Chesterton: "Orthodoxy", "The Napoleon of Notting Hill", "The Man Who Was Thursday"
+J. R. R. Tolkien: "The Lord of the Rings",
+  "The Hobbit"
+G. K. Chesterton: "Orthodoxy",
+  "The Napoleon of Notting Hill",
+  "The Man Who Was Thursday"
 A. C. Doyle: "The Hound of the Baskervilles"
 J. K. Rowling: "Harry Potter"
 J. Buchan: "The Thirty-Nine Steps"
-A. MacLean: "The Way to Dusty Death", "Force 10 from Navarone", "HMS Ulysses"
-A. Christie: "And Then There Were None", "Death on the Nile", "Murder on the Orient Express", "The Murder of Roger Ackroyd"
-P. G. Wodehouse: "Piccadilly Jim", "Love Among the Chickens", "Sam the Sudden"
+A. MacLean: "The Way to Dusty Death",
+  "Force 10 from Navarone",
+  "HMS Ulysses"
+A. Christie: "And Then There Were None",
+  "Death on the Nile",
+  "Murder on the Orient Express",
+  "The Murder of Roger Ackroyd"
+P. G. Wodehouse: "Piccadilly Jim",
+  "Love Among the Chickens",
+  "Sam the Sudden"
 
 
 ***
