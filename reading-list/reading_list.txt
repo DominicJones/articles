@@ -1,11 +1,13 @@
 philosophy:
 
+G. E. M. Anscombe: "Faith in a Hard Ground"
 Aristotle: "Nicomachean Ethics"
 Augustine: "Confessions"
 M. Artigas: "The mind of the universe",
   "Knowing Things for Sure"
 S. L. Brock: "The philosophy of Saint Thomas Aquinas"
 F. C. Copleston: "A History of Medieval Philosophy"
+C. Dawson: "The Crisis of Western Education"
 J. P. Dougherty: "The Nature of Scientific Explanation" 
 E. Feser: "Scholastic Metaphysics",
   "Philosophy of the Mind",
@@ -13,8 +15,10 @@ E. Feser: "Scholastic Metaphysics",
   "Five proofs of the existence of God",
   "The last superstition" 
 K. W. Giberson: "Oracles of science" 
+S. Girgis, R. T. Anderson, R. P. George: "What Is Marriage?: Man and Woman: A Defense"
 J. Maritain: "Three Reformers: Luther, Descartes, Rousseau" 
 C. S. Lewis: "The four loves" 
+A. MacIntyre: "Dependent rational animals"
 B. Mondin: "Philosophical Anthropology: Man: an Impossible Project?" 
 J. Navarro (editor): "Science and Faith Within Reason" 
 D. S. Oderberg: "Real Essentialism" 
@@ -31,9 +35,10 @@ J. M. de Torre: "Christian philosophy",
   "Marxism, Socialism, and Christianity" 
 R. Trigg: "Beyond Matter: why science needs metaphysics" 
 K. Wojtyla: "Love and Responsibility" 
-P. Kreeft: "A Shorter Summa", "Back to Virtue"
 John Paul II: "Memory and Identity"
-G. E. M. Anscombe: "Faith in a Hard Ground"
+P. Kreeft: "A Shorter Summa", "Back to Virtue"
+A. M. Quinton and A. O'Hear: "Education, Values and Culture", Victor Cook Memorial Lectures, 1992
+M. Warnock and R. Pring: "Education, Values and the State", Victor Cook Memorial Lectures, 1994
 
 
 theology:
@@ -61,6 +66,8 @@ F. Sheed: "Theology and Sanity",
   "Theology for Beginners"
 E. Boylan: "This Tremendous Lover",
   "Difficulties in Mental Prayer"
+J. B. Chautard: "The Soul of the Apostolate"
+J. S. Grabowski: "Sex and Virtue"
 Mgr Guerry: "The social teaching of the Church"
 S. Hahn: "Scripture Matters",
   "A Father Who Keeps His Promises",
@@ -85,8 +92,6 @@ G. Cheverot: "Simon Peter"
 A. Tanquerey: "The Spiritual Life"
 T. Kempis: "The Imitation of Christ"
 B. Baur: "Frequent Confession"
-J. B. Chautard: "The Sould of the Apostolate"
-J. S. Grabowski: "Sex and Virtue"
 
 
 magisterium:
@@ -157,14 +162,17 @@ P. G. Wodehouse: "Piccadilly Jim",
 
 *** in the queue: ***
 
+G. Kuby: "The Gobal Sexual Revolution"
+E. Pybus and T. H. McLaughlin: "Education, Values and Responsibility", Victor Cook Memorial Lectures, 1995
+M. G. Amilburu (editor): "Education, the State and the Multicultural Challenge", EUNSA
+G. E. M. Anscombe: "Intention"
 G. E. M. Anscombe: "Human Life, Action and Ethics"
 G. E. M. Anscombe: "From Plato to Wittgenstein"
 G. E. M. Anscombe and P. T. Geach: "Three Philosophers: Aristotle, Aquinas and Frege"
-S. Girgis, R. T. Anderson, R. P. George: "What Is Marriage?: Man and Woman: A Defense"
+W. N. Clarke: "The One and the Many: A Contemporary Thomistic Metaphysics"
 D. Hildebrand: "Man, Woman, and the Meaning of Love"
 D. Hildebrand: "Marriage: The Mystery of Faithful Love"
 D. Hildebrand: "Love, Marriage, and the Catholic Conscience"
-A. MacIntyre: "Dependent rational animals"
 A. MacIntyre: "After Virtue: A Study in Moral Theory"
 T. Alvira and L. Clavell and T. Melendo: "Metaphysics"
 F. F. Labastida and M. Fazio: "A History of Contemporary Philosophy, Nineteenth and Twentieth Centuries"
