@@ -16,11 +16,15 @@ E. Feser: "Scholastic Metaphysics",
   "The last superstition" 
 K. W. Giberson: "Oracles of science" 
 S. Girgis, R. T. Anderson, R. P. George: "What Is Marriage?: Man and Woman: A Defense"
+P. Kreeft: "A Shorter Summa", "Back to Virtue"
+John Paul II: "Memory and Identity"
 J. Maritain: "Three Reformers: Luther, Descartes, Rousseau" 
 C. S. Lewis: "The four loves" 
 A. MacIntyre: "Dependent rational animals"
 B. Mondin: "Philosophical Anthropology: Man: an Impossible Project?" 
 J. Navarro (editor): "Science and Faith Within Reason" 
+E. Pybus and T. H. McLaughlin: "Education, Values and Responsibility", Victor Cook Memorial Lectures, 1995
+A. M. Quinton and A. O'Hear: "Education, Values and Culture", Victor Cook Memorial Lectures, 1992
 D. S. Oderberg: "Real Essentialism" 
 J. Ratzinger: "On Conscience",
   "Truth and Tolerance",
@@ -34,11 +38,8 @@ F. J. Sheed: "Communism and Man"
 J. M. de Torre: "Christian philosophy",
   "Marxism, Socialism, and Christianity" 
 R. Trigg: "Beyond Matter: why science needs metaphysics" 
-K. Wojtyla: "Love and Responsibility" 
-John Paul II: "Memory and Identity"
-P. Kreeft: "A Shorter Summa", "Back to Virtue"
-A. M. Quinton and A. O'Hear: "Education, Values and Culture", Victor Cook Memorial Lectures, 1992
 M. Warnock and R. Pring: "Education, Values and the State", Victor Cook Memorial Lectures, 1994
+K. Wojtyla: "Love and Responsibility" 
 
 
 theology:
@@ -163,7 +164,6 @@ P. G. Wodehouse: "Piccadilly Jim",
 *** in the queue: ***
 
 G. Kuby: "The Gobal Sexual Revolution"
-E. Pybus and T. H. McLaughlin: "Education, Values and Responsibility", Victor Cook Memorial Lectures, 1995
 M. G. Amilburu (editor): "Education, the State and the Multicultural Challenge", EUNSA
 G. E. M. Anscombe: "Intention"
 G. E. M. Anscombe: "Human Life, Action and Ethics"
