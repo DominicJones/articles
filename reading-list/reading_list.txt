@@ -48,6 +48,7 @@ J. H. Newman: "Apologia Pro Vita Sua"
 John Paul II: "Theology of the Body"
 S.-T. Pinckaers: "Morality: The Catholic View",
   "The Sources of Christian Ethics" 
+P. Rodriguez: "The Way: Critical-Historical Edition"
 F. Ocáriz: "Fundamental Theology" 
 P. O'Callaghan: "Children of God in the World" 
 J. Ratzinger: "Principles of Catholic Theology",
@@ -105,6 +106,7 @@ Benedict XVI: "Deus Caritas Est",
   "Sacramentum Caritatis",
   "Spe Salvi",
   "Caritas in Veritate"
+[...]
 
 
 history:
