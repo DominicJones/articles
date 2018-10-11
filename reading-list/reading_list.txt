@@ -17,6 +17,7 @@ E. Feser: "Scholastic Metaphysics",
 K. W. Giberson: "Oracles of science" 
 S. Girgis, R. T. Anderson, R. P. George: "What Is Marriage?: Man and Woman: A Defense"
 P. Kreeft: "A Shorter Summa", "Back to Virtue"
+G. Kuby: "The Gobal Sexual Revolution" (partial)
 John Paul II: "Memory and Identity"
 J. Maritain: "Three Reformers: Luther, Descartes, Rousseau" 
 C. S. Lewis: "The four loves" 
@@ -39,7 +40,7 @@ J. M. de Torre: "Christian philosophy",
   "Marxism, Socialism, and Christianity" 
 R. Trigg: "Beyond Matter: why science needs metaphysics" 
 M. Warnock and R. Pring: "Education, Values and the State", Victor Cook Memorial Lectures, 1994
-K. Wojtyla: "Love and Responsibility" 
+K. Wojtyla: "Love and Responsibility"
 
 
 theology:
@@ -163,9 +164,8 @@ P. G. Wodehouse: "Piccadilly Jim",
   "Sam the Sudden"
 
 
-*** in the queue: ***
+*** being considered: ***
 
-G. Kuby: "The Gobal Sexual Revolution"
 M. G. Amilburu (editor): "Education, the State and the Multicultural Challenge", EUNSA
 G. E. M. Anscombe: "Intention"
 G. E. M. Anscombe: "Human Life, Action and Ethics"
