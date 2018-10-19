@@ -102,6 +102,7 @@ magisterium:
 
 John Paul II, et al: "Catechism of the Catholic Church"
 Leo XIII: "Rerum Novarum"
+Pope Pius XII: "Humani Generis"
 Paul VI: "Humanae Vitae"
 John Paull II: "Fies et Ratio"
 Benedict XVI: "Deus Caritas Est",
