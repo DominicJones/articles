@@ -1,8 +1,11 @@
 \documentclass[10pt,english]{article}
 \usepackage{array, xcolor, bibentry}
-\usepackage[a4paper,bindingoffset=0.0in,%
-            left=1in,right=1in,top=1in,bottom=1in,%
-            footskip=0.0in]{geometry}
+\usepackage[a4paper,bindingoffset=0cm,%
+            left=2cm,right=2cm,top=0cm,bottom=0cm,%
+            footskip=0cm,nohead,nofoot,margin=0cm]{geometry}
+\usepackage{fullpage}
+\usepackage{nopageno}
+\usepackage{bibentry}
 
 \title{\bfseries\Huge Dominic Jones}
 \author{{Netherhall House, Nutley Terrace, London NW3 5SA}\\ {+44 (0)787 524 2761} $|$ \texttt{dominic.jones@gmx.co.uk}\\ \texttt{github.com/DominicJones}}
@@ -17,9 +20,13 @@
 \newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny\bf +}}
 
 \begin{document}
-\maketitle
+%% \maketitle
 
-
+\begin{center}
+  {\Huge{Dominic Jones}}
+\\[5pt]
+  {{Netherhall House, Nutley Terrace, London NW3 5SA}\\ {+44 (0)787 524 2761} $|$ \texttt{dominic.jones@gmx.co.uk}}
+\end{center}
 
 \section*{Professional work}
 \begin{tabular}{L!{\VRule}R}
@@ -38,8 +45,11 @@
 &{Developed a source-code transformation approach to generating the adjoint derivative of the Navier-Stokes equations. This approach was then applied to commercial software. In addition, a domain-decomposed parallel implementation of a Navier-Stokes solver was written in order to explore the extension of the approach to parallel algorithms.}\\[5pt]
 \end{tabular}
 
-\section*{Education}
+\section*{University studies}
 \begin{tabular}{L!{\VRule}R}
+{Sep 2018 -- Sep 2019}&{\bf MA Philosophy, Buckingham}\\
+&{Masters by research, with the selected thesis topic on a defence of the Aristotelian fomal and final causes, drawing from work by D. Oderberg, E. Feser, H. Robinson and D. Papineau.}\\[5pt]
+%
 {Sep 2005 -- Jan 2009}&{\bf Doctoral research, University of Manchester}\\
 &{Attempted to resolve the Further Work of two theses on simulating spray propagation and impaction, from an Eulerian frame of reference. This work presented solutions to spray edge capturing, the inversion of probability density functions, capturing flow details at very small scales, and interaction of interpenetrating sprays.
 
@@ -51,31 +61,42 @@ During my research, I tutored and ran laboratory work for second and third year 
 
 \section*{Academic topics}
 \begin{tabular}{L!{\VRule}R}
-{CD / Siemens}&{Adjoint Differentiation using {\CC}{14} EDSLs}\\[5pt]
+{MA Philosophy}&{Aristotelian-Thomistic metaphysics, Natural Law}\\[2pt]
 %
-{CD-adapco}&{Differentiation Techniques via EDSLs $|$ {\CC} in depth $|$ Parsing, Expression Trees $|$ Code Analysis, Machine Architecture}\\[5pt]
+{CD / Siemens}&{Adjoint Differentiation using {\CC} EDSLs}\\[2pt]
 %
-{Post-doc}&{Automatic Differentiation $|$ Parallel Computation, Domain Decomposition, Message Passing $|$ Optimisation Techniques}\\[5pt]
+{CD-adapco}&{Differentiation Techniques via EDSLs $|$ {\CC} in depth $|$ Parsing, Expression Trees $|$ Code Analysis, Machine Architecture}\\[2pt]
 %
-{Ph.D}&{Computational Fluid Dynamics $|$ Linear Solvers $|$ Probability Density Functions $|$ Spray Hydrodynamics $|$ Mesh, Graph and Matrix Representations}\\[5pt]
+{Post-doc}&{Automatic Differentiation $|$ Parallel Computation, Domain Decomposition, Message Passing $|$ Optimisation Techniques}\\[2pt]
 %
-{BEng}&{Thermodynamics $|$ Fluid Dynamics $|$ Computational Fluid Dynamics}\\[5pt]
+{Ph.D}&{Computational Fluid Dynamics $|$ Linear Solvers $|$ Probability Density Functions $|$ Spray Hydrodynamics $|$ Mesh, Graph and Matrix Representations}\\[2pt]
 %
+{BEng}&{Thermodynamics $|$ Fluid Dynamics $|$ Computational Fluid Dynamics}
 \end{tabular}
 
 
 \bibliographystyle{plain}
 \nobibliography{publications}
-
-\section*{Selected Presentations and Publications}
-\bibentry{jones2016proceedings}\\[5pt]
-\bibentry{jones2013presentation}\\[5pt]
-\bibentry{jones2012proceedings}\\[5pt]
-\bibentry{jones2012journal}\\[5pt]
-\bibentry{jones2011proceedings}\\[5pt]
-\bibentry{jones2010presentation}\\[5pt]
-\bibentry{jones2010proceedings}\\[5pt]
-\bibentry{jones2010presentation}\\[5pt]
-\bibentry{jones2008proceedings}\\[5pt]
-\bibentry{jones2008presentation}\\[5pt]
+\section*{Presentations and publications}
+\bibentry{jones2019oderberg}\\[2pt]
+\bibentry{jones2019pink}\\[2pt]
+\bibentry{jones2018float}\\[2pt]
+\bibentry{jones2018marriage}\\[2pt]
+\bibentry{jones2018functions}\\[2pt]
+\bibentry{jones2018questions}\\[2pt]
+\bibentry{jones2018universals}\\[2pt]
+\bibentry{jones2018unmoved}\\[2pt]
+\bibentry{jones2018expression}\\[2pt]
+\bibentry{jones2018sequential}\\[2pt]
+\bibentry{jones2017names}\\[2pt]
+\bibentry{jones2016proceedings}\\[2pt]
+\bibentry{jones2013presentation}\\[2pt]
+\bibentry{jones2012proceedings}\\[2pt]
+\bibentry{jones2012journal}\\[2pt]
+\bibentry{jones2011proceedings}\\[2pt]
+\bibentry{jones2010presentation}\\[2pt]
+\bibentry{jones2010proceedings}\\[2pt]
+\bibentry{jones2010presentation}\\[2pt]
+\bibentry{jones2008proceedings}\\[2pt]
+\bibentry{jones2008presentation}
 \end{document}
