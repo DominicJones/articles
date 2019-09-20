@@ -1,0 +1,205 @@
+\documentclass[a4paper,12pt]{report}
+%%
+%% packages:
+%%
+\usepackage[left=25mm,right=25mm,top=20mm,bottom=20mm]{geometry}
+%% \usepackage{times}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage[style = british]{csquotes}%
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{sectsty}
+\usepackage{color,soul}
+\usepackage[compact]{titlesec}
+\usepackage{etoolbox}
+\usepackage{url}
+%% \usepackage[indentfirst=false,leftmargin=0pt,rightmargin=0pt]{quoting}
+\usepackage[indentfirst=false,leftmargin=20pt,rightmargin=20pt]{quoting}
+%% \usepackage[backend=bibtex8,style=authoryear,citestyle=authoryear-ibid]{biblatex} % verbose-ibid, authortitle-ibid
+\usepackage[backend=bibtex8,style=authoryear,citestyle=authoryear]{biblatex} % verbose-ibid, authortitle-ibid
+\usepackage[acronym,nopostdot,sort=def]{glossaries}
+\usepackage{ragged2e}
+\usepackage{fancyhdr}
+\usepackage{lineno}
+\usepackage{abstract}
+%%
+%% abbreviations:
+%%
+\loadglsentries{glossary}
+\makeglossaries
+%%
+%% settings:
+%%
+\renewcommand{\abstractnamefont}{\normalfont\Large\bfseries}
+%% \renewcommand{\abstracttextfont}{\normalfont\Huge}
+%%
+%% \bibliographystyle{plain}
+\newcommand\EatDot[1]{}
+%%
+\urlstyle{same}
+%%
+%% \renewbibmacro{in:}{\relax}
+%% \renewbibmacro{in:}{\ifentrytype{article}{\relax}{\printtext{bibstring{in}\intitlepunct}}}
+%%
+\makeatletter
+\def\act@on@bibmacro#1#2{%
+  \expandafter#1\csname abx@macro@\detokenize{#2}\endcsname
+}
+\def\patchbibmacro{\act@on@bibmacro\patchcmd}
+\def\pretobibmacro{\act@on@bibmacro\pretocmd}
+\def\apptobibmacro{\act@on@bibmacro\apptocmd}
+\def\showbibmacro{\act@on@bibmacro\show}
+\makeatother
+%%
+\renewcommand{\postnotedelim}{: }%
+\DeclareFieldFormat{postnote}{#1}%
+\renewcommand{\nameyeardelim}{ }%
+%%
+\bibliography{bibliography}
+%%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+\makeatother
+\titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
+%%
+%% \renewcommand{\footnotesize}{\normalsize}
+\renewcommand{\footnotesize}{\small}
+%%
+\pagestyle{fancy}
+\fancyhf{}
+\fancyheadoffset{0cm}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[R]{\thepage}
+\fancypagestyle{plain}{%
+   \fancyhf{}%
+   \fancyhead[R]{\thepage}%
+}
+%%
+%% \renewbibmacro*{publisher+location+date}{%
+%%   \printtext[parens]{% ADDED
+%%     \printlist{location}%
+%%     \iflistundef{publisher}
+%%       {\setunit*{\addcomma\space}}
+%%       {\setunit*{\addcolon\space}}%
+%%     \printlist{publisher}%
+%%     \setunit*{\addcomma\space}%
+%%     \usebibmacro{date}%
+%%   }\nopunct% ADDED
+%%   \newunit}
+%%
+\renewbibmacro*{publisher+location+date}{%
+  \nopunct%
+  \newunit}
+%%
+%% \renewbibmacro*{volume+number+eid}{%
+%%   \printfield{volume}%
+%% %  \setunit*{\adddot}% DELETED
+%%   \setunit*{\addcolon}% ADDED
+%%   \printfield{number}%
+%%   \setunit{\addcomma\space}%
+%%   \printfield{eid}}
+%%
+%% \linenumbers
+%%
+%% \tolerance=1
+%% \emergencystretch=\maxdimen
+%% \hyphenpenalty=10000
+%% \hbadness=10000
+%% \setlength{\RaggedRightParindent}{\parindent}
+%%
+%% document:
+%%
+\begin{document}
+%%
+%% \RaggedRight
+%%
+%% titlepage:
+%%
+\begin{titlepage}
+  \begin{center}
+
+    {\Large University of Buckingham\\\vspace{2mm}
+      {\large School of Humanities}}
+
+    \vspace{50mm}
+
+    {{\Huge \bf Composition in change:}\\\vspace{2mm}
+      {\LARGE \bf A hylemorphic view}}
+
+    \vspace{15mm}
+
+    {\large \bf Dominic Jones}
+
+    \vspace{50mm}
+
+    \includegraphics[width=0.5\textwidth]{ub-logo}
+    %% {\large \bf --- DRAFT ---}
+
+    \vfill
+
+    {Submitted in part fulfilment of the requirements for the degree of\\
+      Master of Arts in Philosophy by Research of the University of Buckingham,\\\vspace{2mm}
+      {\bf September, 2019}}
+  \end{center}
+\end{titlepage}
+%%
+%% preface:
+%%
+\input{abstract}
+%%
+%% body:
+%%
+\pagenumbering{arabic}
+%%
+%% \doublespace
+\onehalfspace
+%%
+\setcounter{tocdepth}{1}
+\tableofcontents
+\input{introduction}
+\input{change}
+\input{permanence}
+\input{composition}
+\input{conclusion}
+%%
+%% abbreviations:
+%%
+\addcontentsline{toc}{chapter}{Abbreviations}
+\printglossary[type=\acronymtype,title=Abbreviations,nonumberlist]
+%%
+%% bibliography:
+%%
+\patchbibmacro{date+extrayear}{%
+  \printtext[parens]%
+}{%
+  \setunit{\addperiod\space}%
+  \printtext%
+}{}{}
+%%
+\addcontentsline{toc}{chapter}{Bibliography}
+%%
+\printbibliography
+%%
+\end{document}
+
+
+%% @book{,
+%%   author={},
+%%   year={},
+%%   note={\emph{} (: )\EatDot}
+%% }
+
+%% @book{,
+%%   author={},
+%%   year={},
+%%   note={`', \emph{}\EatDot}
+%% }
+
+%% @book{,
+%%   author={},
+%%   year={},
+%%   note={`', \emph{} {\textless}\url{}{\textgreater} [accessed 1 June 2019]\EatDot}
+%% }
