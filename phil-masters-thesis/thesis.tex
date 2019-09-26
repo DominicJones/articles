@@ -14,8 +14,8 @@
 \usepackage[compact]{titlesec}
 \usepackage{etoolbox}
 \usepackage{url}
-%% \usepackage[indentfirst=false,leftmargin=0pt,rightmargin=0pt]{quoting}
-\usepackage[indentfirst=false,leftmargin=20pt,rightmargin=20pt]{quoting}
+\usepackage[indentfirst=false,leftmargin=0pt,rightmargin=0pt]{quoting}
+%% \usepackage[indentfirst=false,leftmargin=20pt,rightmargin=20pt]{quoting}
 %% \usepackage[backend=bibtex8,style=authoryear,citestyle=authoryear-ibid]{biblatex} % verbose-ibid, authortitle-ibid
 \usepackage[backend=bibtex8,style=authoryear,citestyle=authoryear]{biblatex} % verbose-ibid, authortitle-ibid
 \usepackage[acronym,nopostdot,sort=def]{glossaries}
@@ -104,17 +104,17 @@
 %%
 %% \linenumbers
 %%
-%% \tolerance=1
-%% \emergencystretch=\maxdimen
-%% \hyphenpenalty=10000
-%% \hbadness=10000
-%% \setlength{\RaggedRightParindent}{\parindent}
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+\setlength{\RaggedRightParindent}{\parindent}
 %%
 %% document:
 %%
 \begin{document}
 %%
-%% \RaggedRight
+\RaggedRight
 %%
 %% titlepage:
 %%
@@ -133,10 +133,8 @@
 
     {\large \bf Dominic Jones}
 
-    \vspace{50mm}
-
-    \includegraphics[width=0.5\textwidth]{ub-logo}
-    %% {\large \bf --- DRAFT ---}
+    %% \vspace{50mm}
+    %% \includegraphics[width=0.5\textwidth]{ub-logo}
 
     \vfill
 
@@ -154,11 +152,13 @@
 %%
 \pagenumbering{arabic}
 %%
-%% \doublespace
-\onehalfspace
+\doublespace
+%% \onehalfspace
 %%
+\input{dedication}
 \setcounter{tocdepth}{1}
 \tableofcontents
+\input{declaration}
 \input{introduction}
 \input{change}
 \input{permanence}
