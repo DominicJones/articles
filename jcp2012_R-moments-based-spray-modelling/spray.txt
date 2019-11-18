@@ -1,0 +1,9 @@
+"Moments Based Spray Modelling"
+
+Significance:
+This work furthers the research on a spray simulation methodology using method of moments which has a number of important benefits over the current established methodology of particle tracking. Spray simulation is a key modelling component in engine simulation, etc, and fast, accuarate modelling methologies are required. This method has been shown to be significantly faster than particle tracking and does not have mesh related stability problems associated with it.
+
+Novelty:
+This paper presents the authors best attempts at implementing solutions to the proposed body of "further work" detailed by the original developer of the moments based spray model (J.C. Beck, UMIST, Manchester, 2000). The work is broad, dealing with the physical models, discretization, moments closure and wall impaction. The purpose of addressing this further work was to try to raise the model to a state which is suitable as a feature in general CFD solvers. The conclusion is that it is not, but its documentation is considered worthwhile since the causes of the problems are given, and there are still some important developments made.
+
+D. P. Jones, 11 Oct 2011

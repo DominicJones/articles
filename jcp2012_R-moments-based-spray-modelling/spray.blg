@@ -1,0 +1,84 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: spray.aux
+The style file: plain.bst
+Database file #1: ././references.bib.bib
+You're missing a field name---line 4 of file ././references.bib.bib
+ : 
+ : %  AUTHOR =       "",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 24 of file ././references.bib.bib
+ : 
+ : %  AUTHOR =       "",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 45 of file ././references.bib.bib
+ : 
+ : %  AUTHOR =       "",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 60 of file ././references.bib.bib
+ : 
+ : %  TITLE =        "",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 79 of file ././references.bib.bib
+ : 
+ : %  AUTHOR =       "",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 98 of file ././references.bib.bib
+ : 
+ : %  AUTHOR =       "",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 836 of file ././references.bib.bib
+ :   
+ :   number =       "C12/87"
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--there's a number but no volume in bai1995
+Warning--there's a number but no volume in reitz1986
+Warning--there's a number but no volume in stanton1998
+You've used 26 entries,
+            2118 wiz_defined-function locations,
+            640 strings with 7780 characters,
+and the built_in function-call counts, 7581 in all, are:
+= -- 758
+> -- 325
+< -- 2
++ -- 133
+- -- 102
+* -- 478
+:= -- 1310
+add.period$ -- 79
+call.type$ -- 26
+change.case$ -- 125
+chr.to.int$ -- 0
+cite$ -- 29
+duplicate$ -- 298
+empty$ -- 597
+format.name$ -- 102
+if$ -- 1555
+int.to.chr$ -- 0
+int.to.str$ -- 26
+missing$ -- 31
+newline$ -- 134
+num.names$ -- 52
+pop$ -- 124
+preamble$ -- 1
+purify$ -- 103
+quote$ -- 0
+skip$ -- 208
+stack$ -- 0
+substring$ -- 456
+swap$ -- 42
+text.length$ -- 2
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 94
+warning$ -- 3
+while$ -- 78
+width$ -- 28
+write$ -- 280
+(There were 7 error messages)

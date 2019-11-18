@@ -1,0 +1,152 @@
+\begin{thebibliography}{10}
+
+\bibitem{ahmadi1993}
+M.~Ahmadi and R.~W. Sellens.
+\newblock A simplified maximum-entropy-based drop size distribution.
+\newblock {\em Atomization and Sprays}, 3:291--310, 1993.
+
+\bibitem{bai1995}
+C.~Bai and A.~D. Gosman.
+\newblock Development of methodology for spray impingement simulation.
+\newblock {\em SAE Technical Paper Series}, (950283), 1995.
+
+\bibitem{beck2000}
+J.~C. Beck.
+\newblock {\em Computational modelling of polydisperse sprays without
+  segregation into droplet size classes}.
+\newblock Ph. D. Thesis, UMIST, 2000.
+
+\bibitem{beck2002}
+J.~C. Beck and A.~P. Watkins.
+\newblock On the development of spray submodels based on droplet size moments.
+\newblock {\em J. of Comp. Phys.}, 182:586--621, 2002.
+
+\bibitem{beck2003}
+J.~C. Beck and A.~P. Watkins.
+\newblock On the development of a spray model based on drop-size moments.
+\newblock {\em Proc. R. Soc. Lond.}, A(459):1365--1394, 2003.
+
+\bibitem{crowe1998}
+C.~T. Crowe, M.~Sommerfeld, and Y.~Tsuji.
+\newblock {\em Multiphase Flows with Droplets and Particles}.
+\newblock CRC Press, 1998.
+
+\bibitem{grover2001}
+R.~O. Grover and D.~N. Assanis.
+\newblock A spray wall impingement model based upon conservation principles.
+\newblock {\em The Fifth International Sympostum on Diagnostics and Modeling of
+  Combustion in Internal Combustion Engines}, 2001.
+
+\bibitem{hsiang1992}
+L.~P. Hsiang and G.~M. Faeth.
+\newblock Near-limit drop deformation and secondary breakup.
+\newblock {\em Int. J. Multiphase Flow}, 18(5):635--652, 1992.
+
+\bibitem{john2007}
+V.~John, I.~Angelov, A.~A. Oncul, and D.~Thevenin.
+\newblock Techniques for the reconstruction of a distribution from a finite
+  number of its moments.
+\newblock {\em Chemical Engineering Science}, 62:2890--2904, 2007.
+
+\bibitem{jones2011}
+D.~P. Jones and A.~P. Watkins.
+\newblock Droplet size and velocity distributions for spray modelling.
+\newblock {\em Journal of Computational Physics}, 2011.
+\newblock accepted.
+
+\bibitem{lemini2002}
+E.~Lemini and A.~P. Watkins.
+\newblock Development of a spray wall impaction model without discretisation
+  into droplet size classes.
+\newblock {\em ILASS-Europe 2002}, 2002.
+
+\bibitem{lemini2004}
+E.~E. Lemini.
+\newblock {\em A new methodology for modelling impinging sprays based on drop
+  size moments}.
+\newblock Ph. D. Thesis, UMIST, 2004.
+
+\bibitem{muzaferija1999}
+S.~Muzaferija and M.~Peric.
+\newblock Computation of free-surface flows using interface tracking and
+  interface-capturing methods.
+\newblock {\em Non-linear Water Wave Interaction}, pages 59--100, 1999.
+
+\bibitem{nicholls1972}
+J.~A. Nicholls.
+\newblock Stream and droplet breakup by shock waves.
+\newblock {\em in NASA SP–194 (Eds. D.T. Harrje and F.H. Reardon)}, pages
+  126--128, 1972.
+
+\bibitem{orourke1981}
+P.J. O'Rourke.
+\newblock {\em Collective Drop Effects on Vaporising Liquid Sprays}.
+\newblock PhD Thesis, University of Princeton, 1981.
+
+\bibitem{park2004}
+J.~S. Park, H.~S. Kim, and M.~C. Lai.
+\newblock Visualization and measurement of a narrow-cone di gasoline spray for
+  the impingement analysis.
+\newblock {\em Int. J. of Automotive Technology}, 5(4):221--238, 2004.
+
+\bibitem{pilch1987}
+M.~Pilch and C.~A. Erdman.
+\newblock Use of breakup time data and velocity history data to predict the
+  maximum size of stable fragments for acceleration-induced breakup of a liquid
+  drop.
+\newblock {\em Int. J. Multiphase Flow}, 13(6):741--757, 1987.
+
+\bibitem{reitz1986}
+R.~D. Reitz and R.~Diwakar.
+\newblock Effect of drop breakup on fuel sprays.
+\newblock {\em SAE Technical Paper Series}, (860469), 1986.
+
+\bibitem{stanton1998}
+D.~W. Stanton and C.~J. Rutland.
+\newblock Multi-dimensional modeling of heat and mass transfer of fuel films
+  resulting from impinging sprays.
+\newblock {\em SAE Paper}, (980132), 1998.
+
+\bibitem{tagliani2001}
+A.~Tagliani.
+\newblock Numerical aspects of finite {H}ausdorff moment problem by maximum
+  entropy approach.
+\newblock {\em Applied Mathematics and Computation}, 118:133--149, 2001.
+
+\bibitem{talenti1987}
+G.~Talenti.
+\newblock Recovering a function from a finite number of moments.
+\newblock {\em Inverse Problems}, 3:501--517, 1987.
+
+\bibitem{versteeg2006}
+H.~K. Versteeg and W.~Malalasekera.
+\newblock {\em An Introduction to Computational Fluid Dynamics}.
+\newblock Pearson, second edition, 2006.
+
+\bibitem{watkins2006}
+A.~P. Watkins.
+\newblock Modelling the mean temperatures used for calculating heat and mass
+  transfer in sprays.
+\newblock {\em International Journal of Heat and Fluid Flow}, 2006.
+
+\bibitem{wigley2001}
+G.~Wigley, G.~Pitcher, D.~Law, B.~Schneider, and S.~Rogers.
+\newblock Effect of compression pressure on the spray morphology of gdi
+  pressure-swirl injectors.
+\newblock {\em The Fifth International Sympostum on Diagnostics and Modeling of
+  Combustion in Internal Combustion Engines}, 2001.
+
+\bibitem{woodbury2004}
+A.~D. Woodbury.
+\newblock A {F}ortran program to produce minimum relative entropy
+  distributions.
+\newblock {\em Computers and Geosciences}, 30:131--138, 2004.
+
+\bibitem{yue2004}
+B.~Yue and A.~P. Watkins.
+\newblock {M}athematical development and numerical analysis of further
+  transport equations for the droplet size moment theory.
+\newblock {\em 19th Annual Meeting of the Institute for Liquid Atomization and
+  Spraying Systems (Europe)}, 2004.
+
+\end{thebibliography}
